@@ -33,8 +33,11 @@
 }
 
 .tos-pp {
-  font-size: 13px;
-  margin-top: 20px;
+  font-size: 12px;
+
+  .links + & {
+    margin-top: 20px;
+  }
 }
 
 .verification-email-message,
@@ -59,7 +62,7 @@
 .marketing-email-optin-row {
   color: $link-color-extra;
   font-size: 13px;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .choose-what-to-sync-row,

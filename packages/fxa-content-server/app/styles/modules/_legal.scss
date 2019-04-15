@@ -11,36 +11,18 @@
 }
 
 #legal-footer {
-  bottom: 0;
-  position: relative;
-  text-align: center;
-  width: 100%;
-
-  @include respond-to('reasonableUI') {
-    margin: 10px 0;
-  }
-
-  @include respond-to('trustedUI') {
-    margin: 0;
-  }
-
-  .terms,
-  .privacy {
-    margin: 0 20px;
-    width: 50%;
-  }
-
-  .terms {
-    text-align: right;
-  }
-
-  .privacy {
-    text-align: left;
-  }
+  display: flex;
+  justify-content: flex-end;
+  height: 96px;
+  padding: 0 32px;
+  align-items: center;
 
   a {
-    color: $faint-text-color;
-    font-size: $small-font;
+    padding: 0 16px;
+
+    &:last-child {
+      padding: 0 0 0 16px;
+    }
   }
 }
 

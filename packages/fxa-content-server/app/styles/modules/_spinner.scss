@@ -2,11 +2,12 @@
   animation: 0.9s spin infinite linear;
   display: block;
   height: 36px;
-  margin: 130px auto 0;
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
   width: 36px;
+  position: absolute;
+  top: calc(50% - 36px);
 }
 
 #loading-avatar-spinner img {

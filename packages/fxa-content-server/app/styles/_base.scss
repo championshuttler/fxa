@@ -14,15 +14,21 @@ body {
   @include font();
   color: $text-color;
   font-size: $base-font;
-  font-weight: 300;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 0 0;
 
-  @include respond-to('reasonableUI') {
-    padding-bottom: 20px;
+  &.settings {
+    padding: 0;
+    justify-content: flex-start;
   }
 
-  @include respond-to('trustedUI') {
-    margin: 0;
+  @include respond-to('small') {
     padding: 0;
+    justify-content: flex-start;
   }
 }
 
@@ -63,7 +69,14 @@ a {
 }
 
 header {
-  margin-bottom: 16px;
+
+  @include respond-to('big') {
+    margin-bottom: 32px;
+  }
+
+  @include respond-to('small') {
+    margin-bottom: 16px;
+  }
 
   h1,
   h2,
@@ -143,10 +156,10 @@ input[type='radio'] {
 }
 
 .prefillEmail {
+  @include title20();
   color: $grey-60;
-  font-size: 15px;
-  font-weight: 500;
   word-wrap: break-word;
+  margin-top: -4px;
 }
 
 section p {

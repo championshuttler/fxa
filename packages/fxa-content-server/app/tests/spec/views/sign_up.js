@@ -163,7 +163,7 @@ describe('views/sign_up', function () {
           view.highlightSignupPasswordHelper({
             target: '#password'
           });
-          assert.equal(view.$('.input-help-balloon').css('top'), '-80px');
+          assert.equal(view.$('.input-help-balloon').css('top'), '-78px');
         });
     });
 
@@ -174,9 +174,7 @@ describe('views/sign_up', function () {
           view.highlightSignupPasswordHelper({
             target: '#vpassword'
           });
-          /* The behaviour of firefox in new versions has changed,
-          so for versions <= 64 it is auto and for versions >= 65 it is '' (empty string) */
-          assert.include(['', 'auto'], view.$('.input-help-balloon').css('top'));
+          assert.equal(view.$('.input-help-balloon').css('top'), '-10px');
         });
     });
 
