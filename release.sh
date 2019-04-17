@@ -46,6 +46,7 @@ set -e
 #   14. Return to the original branch.
 #   15. Tell the user what we did.
 
+SCRIPT_DIR=`dirname "$0"`
 CURRENT_BRANCH=`git branch | grep '^\*' | cut -d ' ' -f 2`
 
 abort() {
@@ -233,6 +234,12 @@ bump() {
   if [ -f "$1/CHANGELOG.md" ]; then
     awk "{ gsub(/^## $LAST_VERSION/, \"## $NEW_VERSION\n\n$SUMMARY## $LAST_VERSION\") }; { print }" "$1/CHANGELOG.md" > "$1/CHANGELOG.md.release.bak"
     mv "$1/CHANGELOG.md.release.bak" "$1/CHANGELOG.md"
+    if [ "$PERTINENT_CHANGELOGS" = "" ]; then
+      PERTINENT_CHANGELOGS="$1"
+    else
+      PERTINENT_CHANGELOGS="$PERTINENT_CHANGELOGS
+$1"
+    fi
   fi
 
   # Clear summaries before the next iteration
@@ -324,6 +331,10 @@ else
   PRIVATE_DIFF_FROM="$PRIVATE_REMOTE/$PRIVATE_BRANCH"
 fi
 
+if [ -f "$SCRIPT_DIR/create-deploy-bug.url" ]; then
+  DEPLOY_BUG_URL=`cat "$SCRIPT_DIR/create-deploy-bug.url" | sed "s/TRAIN_NUMBER/$NEW_VERSION/"`
+fi
+
 # 12. Merge train branch into the private train branch.
 git merge "$TRAIN_BRANCH" -m "Merge $TRAIN_BRANCH into $PRIVATE_BRANCH" > /dev/null 2>&1
 
@@ -383,5 +394,41 @@ if [ "$IS_BIG_RELEASE" = "1" ]; then
   echo '> ```'
   echo ">"
   echo "> That diff should show only the changes from the private repo, proving that the $TRAIN_BRANCH branches are equal in other respects."
+  echo
+fi
+
+if [ "$BUILD_TYPE" = "Train" ]; then
+  echo "If there's no deploy bug for $TRAIN_BRANCH yet, you should create one using this URL:"
+  echo
+  echo "  $DEPLOY_BUG_URL"
+  echo
+  echo "In that bug, remember to...
+  echo
+  echo "* Copy notes from the deploy doc:"
+  echo
+  echo "  https://docs.google.com/document/d/1lc5T1ZvQZlhXY6j1l_VMeQT9rs1mN7yYIcHbRPR2IbQ"
+  echo
+  echo '* Add links to the `needs:qa` label for this milestone:'
+  echo
+  echo "  https://github.com/mozilla/fxa/issues?utf8=%E2%9C%93&q=label%3Aneeds%3Aqa+is%3Aclosed+milestone%3A%22Train+$TRAIN%22"
+  echo "  https://github.com/mozilla/fxa/pulls?utf8=%E2%9C%93&q=label%3Aneeds%3Aqa+is%3Aclosed+milestone%3A%22Train+$TRAIN%22"
+  echo
+else
+  echo "Don't forget to leave a comment in the deploy bug."
+  echo
+fi
+
+echo "* Add links to the tags:"
+echo
+echo "  https://github.com/mozilla/fxa/releases/tag/$NEW_TAG"
+echo "  https://github.com/mozilla/fxa-private/releases/tag/$PRIVATE_TAG"
+echo
+
+if [ "$PERTINENT_CHANGELOGS" != "" ]; then
+  echo "* Add links to the pertinent changelogs:"
+  echo
+  while read -r PACKAGE; do
+    echo "  https://github.com/mozilla/fxa/blob/$NEW_TAG/packages/$PACKAGE/CHANGELOG.md"
+  done <<< "$PERTINENT_CHANGELOGS"
   echo
 fi
