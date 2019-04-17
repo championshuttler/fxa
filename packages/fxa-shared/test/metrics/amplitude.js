@@ -113,6 +113,8 @@ describe('metrics/amplitude:', () => {
           ],
           emailDomain: 'e',
           entrypoint: 'f',
+          entrypoint_experiment: 'exp',
+          entrypoint_variation: 'var',
           experiments: [
             { choice: 'g', group: 'h' },
             { choice: 'iI', group: 'jJ-J' }
@@ -160,6 +162,8 @@ describe('metrics/amplitude:', () => {
               fxa_services_used: 'qux'
             },
             entrypoint: 'f',
+            entrypoint_experiment: 'exp',
+            entrypoint_variation: 'var',
             flow_id: 'l',
             sync_active_devices_day: 1,
             sync_active_devices_month: 5,

@@ -344,6 +344,8 @@ describe('/account/create', () => {
         metricsContext: {
           deviceId: 'wibble',
           entrypoint: 'blee',
+          entrypointExperiment: 'exp',
+          entrypointVariation: 'var',
           flowBeginTime: Date.now(),
           flowId: 'F1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF103',
           utmCampaign: 'utm campaign',
@@ -467,6 +469,8 @@ describe('/account/create', () => {
       assert.ok(eventData.data.ts, 'timestamp of event set');
       assert.deepEqual(eventData.data.metricsContext, {
         entrypoint: 'blee',
+        entrypoint_experiment: 'exp',
+        entrypoint_variation: 'var',
         flowBeginTime: mockRequest.payload.metricsContext.flowBeginTime,
         flowCompleteSignal: 'account.signed',
         flowType: undefined,
@@ -498,6 +502,8 @@ describe('/account/create', () => {
       assert.deepEqual(args[0], {
         country: 'United States',
         entrypoint: 'blee',
+        entrypoint_experiment: 'exp',
+        entrypoint_variation: 'var',
         event: 'account.created',
         flowBeginTime: mockRequest.payload.metricsContext.flowBeginTime,
         flowCompleteSignal: 'account.signed',
@@ -699,6 +705,8 @@ describe('/account/login', () => {
       metricsContext: {
         deviceId: 'blee',
         entrypoint: 'flub',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         flowBeginTime: Date.now(),
         flowId: 'F1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF1031DF103',
         utmCampaign: 'utm campaign',

@@ -381,6 +381,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'bar',
         utmContent: 'baz',
         utmMedium: 'qux',
@@ -398,11 +400,53 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: ';',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'foo',
         utmContent: 'bar',
         utmMedium: 'baz',
         utmSource: 'qux',
         utmTerm: 'wibble',
+      }
+    };
+    return api.accountCreate(email, authPW, options)
+      .then(assert.fail, err => assert.equal(err.errno, 107));
+  });
+
+  it('invalid entrypointExperiment', () => {
+    const api = new Client.Api(config.publicUrl);
+    const email = server.uniqueEmail();
+    const authPW = '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF';
+    const options = {
+      metricsContext: {
+        entrypoint: 'foo',
+        entrypointExperiment: ';',
+        entrypointVariation: 'var',
+        utmCampaign: 'bar',
+        utmContent: 'baz',
+        utmMedium: 'qux',
+        utmSource: 'wibble',
+        utmTerm: 'blee',
+      }
+    };
+    return api.accountCreate(email, authPW, options)
+      .then(assert.fail, err => assert.equal(err.errno, 107));
+  });
+
+  it('invalid entrypointVariation', () => {
+    const api = new Client.Api(config.publicUrl);
+    const email = server.uniqueEmail();
+    const authPW = '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF';
+    const options = {
+      metricsContext: {
+        entrypoint: 'foo',
+        entrypointExperiment: 'exp
+        entrypointVariation: ';',
+        utmCampaign: 'bar',
+        utmContent: 'baz',
+        utmMedium: 'qux',
+        utmSource: 'wibble',
+        utmTerm: 'blee',
       }
     };
     return api.accountCreate(email, authPW, options)
@@ -416,6 +460,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: ';',
         utmContent: 'bar',
         utmMedium: 'baz',
@@ -434,6 +480,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'bar',
         utmContent: ';',
         utmMedium: 'baz',
@@ -452,6 +500,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'bar',
         utmContent: 'baz',
         utmMedium: ';',
@@ -470,6 +520,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'bar',
         utmContent: 'baz',
         utmMedium: 'qux',
@@ -488,6 +540,8 @@ describe('remote account create', function() {
     const options = {
       metricsContext: {
         entrypoint: 'foo',
+        entrypointExperiment: 'exp',
+        entrypointVariation: 'var',
         utmCampaign: 'bar',
         utmContent: 'baz',
         utmMedium: 'qux',

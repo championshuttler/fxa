@@ -41,6 +41,8 @@ const ALLOWED_FIELDS = [
   'duration',
   'emailDomain',
   'entrypoint',
+  'entrypointExperiment',
+  'entrypointVariation',
   'events',
   'experiments',
   'flowBeginTime',
@@ -129,6 +131,8 @@ function Metrics (options = {}) {
   this._devicePixelRatio = options.devicePixelRatio || NOT_REPORTED_VALUE;
   this._emailDomain = NOT_REPORTED_VALUE;
   this._entrypoint = options.entrypoint || NOT_REPORTED_VALUE;
+  this._entrypointExperiment = options.entrypointExperiment || NOT_REPORTED_VALUE;
+  this._entrypointVariation = options.entrypointVariation || NOT_REPORTED_VALUE;
   this._env = options.environment || new Environment(this._window);
   this._eventMemory = {};
   this._inactivityFlushMs = options.inactivityFlushMs || DEFAULT_INACTIVITY_TIMEOUT_MS;
@@ -352,6 +356,8 @@ _.extend(Metrics.prototype, Backbone.Events, {
       deviceId: flowData.deviceId || NOT_REPORTED_VALUE,
       emailDomain: this._emailDomain,
       entrypoint: this._entrypoint,
+      entrypointExperiment: this._entrypointExperiment,
+      entrypointVariation: this._entrypointVariation,
       experiments: flattenHashIntoArrayOfObjects(this._activeExperiments),
       flowBeginTime: flowData.flowBeginTime,
       flowId: flowData.flowId,
@@ -657,6 +663,8 @@ _.extend(Metrics.prototype, Backbone.Events, {
     return {
       deviceId: metadata.deviceId,
       entrypoint: marshallProperty(this._entrypoint),
+      entrypointExperiment: marshallProperty(this._entrypointExperiment),
+      entrypointVariation: marshallProperty(this._entrypointVariation),
       flowBeginTime: metadata.flowBegin,
       flowId: metadata.flowId,
       utmCampaign: marshallProperty(this._utmCampaign),
