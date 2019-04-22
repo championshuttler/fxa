@@ -56,6 +56,9 @@ describe('views/pair/auth_allow', () => {
       window: windowMock,
     });
     broker.set('remoteMetaData', REMOTE_METADATA);
+    broker.set('browserSignedInAccount', {
+      email: account.get('email'),
+    });
 
     initView();
   });
